@@ -36,6 +36,23 @@
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>    
+            
+            <div class="form-group mb-5">
+                <h4>Choose the tags</h4>
+
+                @foreach ($tags as $tag)
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" name="tags[]" type="checkbox" id="tag-{{ $tag->id }}" value="{{ $tag->id }}"
+                        {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}
+                        >
+                        <label class="form-check-label" for="tag-{{ $tag->id }}">{{ $tag->name }}</label>
+                    </div>
+                @endforeach
+            </div>
+            @error('tags')
+                    <small class="text-danger">{{ $message }}</small>
+            @enderror
+                
             <button type="submit" class="btn btn-primary">Create</button>
             <a class="btn btn-secondary ml-2" href="{{ route('admin.posts.index') }}">All posts</a>
         </form>

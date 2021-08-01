@@ -5,7 +5,24 @@
         <h1>
             {{ $post->title }}
         </h1>
+        
+        @if ($post->category)        
+            <a href="{{ route('admin.categories.show', $post->category->id) }}" class="badge badge-info">{{ $post->category->name }}</a>
+        @else
+            <span class="badge badge-secondary">Nessuna categoria associata</span>     
+        @endif
+
         <small>{{ $post->slug }}</small>
+
+        @if (count($post->tags) > 0)
+            <div class="mt-3 h4">
+                @foreach ($post->tags as $tag)
+                    <span class="badge badge-pill badge-dark">{{ $tag->name }}</span>    
+                @endforeach
+            </div>
+        @else
+            <h5 class="mt-3">Nessun tag collegato</h5>    
+        @endif
 
         <div class="mt-4">
             {{ $post->content }}

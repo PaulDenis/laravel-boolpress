@@ -15,7 +15,9 @@
                 <th>Id</th>
                 <th>Title</th>
                 <th>Slug</th>
-                <th colspan="4">Actions</th>
+                <th>Category</th>
+                <th>Tags</th>
+                <th colspan="3">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -25,23 +27,28 @@
                     <td>{{ $item->title }}</td>
                     <td>{{ $item->slug }}</td>
                     <td>
+                        @if ($item->category)
+                            <a class="btn btn-secondary"href="{{ route('admin.categories.show', $item->category->id) }}">{{ $item->category->name }}</a>
+                            
+                        @endif
+                    </td>
+                    <td>
+                        @foreach ($item->tags as $tag)
+                            <span class="badge badge-pill badge-dark"> {{ $tag->name }}</span>
+                        @endforeach
+                    </td>
+                    <td>
                         <a class="btn btn-success" href="{{ route('admin.posts.show', $item->id) }}">SHOW</a>
                     </td>
                     <td>
                         <a class="btn btn-primary" href="{{ route('admin.posts.edit', $item->id) }}">EDIT</a>
                     </td>
                     <td>
-                        <form action="{{ route('admin.posts.destroy', $item->id) }}" method="POST" onSubmit="return confirm('Sei sicuro di voler eliminare questo articolo?')">
+                        <form action="{{ route('admin.posts.destroy', $item->id) }}" method="POST" onSubmit="return confirm('Are you sure you want to delete this post?')">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">DELETE</button>
                         </form>
-                    </td>
-                    <td>
-                        @if ($item->category)
-                            <a class="btn btn-secondary"href="{{ route('admin.categories.show', $item->category->id) }}">{{ $item->category->name }}</a>
-                            
-                        @endif
                     </td>
                 </tr>
             @endforeach

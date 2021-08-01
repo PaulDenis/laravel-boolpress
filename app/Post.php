@@ -13,7 +13,13 @@ class Post extends Model
         'content'
     ];
 
+    //post -> categories
     public function category() {
         return $this->belongsTo('App\Category');
+    }
+
+    //posts -> tags
+    public function tags() {
+        return $this->belongsToMany('App\Tag');
     }
 }
